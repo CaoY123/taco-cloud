@@ -1,4 +1,4 @@
-package com.mine.cloud.tacocloud;
+package com.mine.cloud;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
