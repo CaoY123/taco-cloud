@@ -1,8 +1,12 @@
 package com.mine.cloud.controller;
 
+import com.mine.cloud.dao.IngredientRepository;
+import com.mine.cloud.dao.TacoRepository;
 import com.mine.cloud.domain.Ingredient;
+import com.mine.cloud.domain.Order;
 import com.mine.cloud.domain.Taco;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -10,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import com.mine.cloud.domain.Ingredient.Type;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
@@ -23,47 +28,60 @@ import java.util.stream.Collectors;
 @Slf4j
 @Controller
 @RequestMapping("/design") // 指定基本的、通用的路径
+@SessionAttributes("order")
 public class DesignTacoController {
+    // 配料表持久化
+    private final IngredientRepository ingredientRepository;
 
-    @ModelAttribute
-    public void addIngredientsToModel(Model model) {
-        List<Ingredient> ingredients = Arrays.asList(
-                new Ingredient("FLTO", "Flour Tortilla", Type.WRAP),
-                new Ingredient("COTO", "Corn Tortilla", Type.WRAP),
-                new Ingredient("GRBF", "Ground Beef", Type.PROTEIN),
-                new Ingredient("CARN", "Carnitas", Type.PROTEIN),
-                new Ingredient("TMTO", "Diced Tomatoes", Type.VEGGIES),
-                new Ingredient("LETC", "Lettuce", Type.VEGGIES),
-                new Ingredient("CHED", "Cheddar", Type.CHEESE),
-                new Ingredient("JACK", "Monterrey Jack", Type.CHEESE),
-                new Ingredient("SLSA", "Salsa", Type.SAUCE),
-                new Ingredient("SRCR", "Sour Cream", Type.SAUCE)
-        );
+    // Taco表持久化(以及伴随Taco持久化的Taco_ingredients表持久化)
+    private TacoRepository tacoRepository;
 
-        Type[] types = Type.values();
-        for (Type type : types) {
-            model.addAttribute(
-                    type.toString().toLowerCase(),
-                    filterByType(ingredients, type)
-            );
-        }
+    @Autowired
+    public DesignTacoController(IngredientRepository ingredientRepository,
+                                TacoRepository tacoRepository) {
+        this.ingredientRepository = ingredientRepository;
+        this.tacoRepository = tacoRepository;
+    }
+
+    @ModelAttribute(name = "order")
+    public Order order() {
+        return new Order();
+    }
+
+    @ModelAttribute(name = "taco")
+    public Taco taco() {
+        return new Taco();
     }
 
 //    @RequestMapping(method = RequestMethod.GET) // 另一种通用的写法
     @GetMapping
     public String showDesignForm(Model model) {
-        model.addAttribute("design", new Taco());
+        List<Ingredient> ingredients = new ArrayList<>();
+        ingredientRepository.findAll().forEach(i -> ingredients.add(i));
+
+        Type[] types = Type.values();
+        for (Type type : types) {
+            model.addAttribute(type.toString().toLowerCase(),
+                    filterByType(ingredients, type));
+        }
+        Taco taco = new Taco();
+        taco.setIngredients(ingredients);
+        model.addAttribute("design", taco);
         // 跳到design.html页面
         return "design";
     }
 
     @PostMapping
-    public String processzDesign(@Valid @ModelAttribute("design") Taco design, Errors errors,Model model) {
+    public String processDesign(
+            @Valid @ModelAttribute("design") Taco design,
+            Errors errors,
+            @ModelAttribute Order order) {
         if(errors.hasErrors()) {
             return "design";
         }
 
-        // TODO 保存taco design
+        Taco saved = tacoRepository.save(design);
+        order.addDesign(saved);
         log.info("Processing design: " + design);
 
         // 重定向到：/order/current
