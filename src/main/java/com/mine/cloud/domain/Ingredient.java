@@ -1,6 +1,8 @@
 package com.mine.cloud.domain;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
 
 /**
  * @author CaoY
@@ -8,6 +10,7 @@ import lombok.Data;
  * @description 配料类
  */
 @Data
+@RequiredArgsConstructor
 public class Ingredient {
     private final String id;
     private final String name;

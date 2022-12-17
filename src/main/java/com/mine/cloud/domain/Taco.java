@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -19,10 +20,14 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Taco {
+    private Long id;
+
+    private Date createdAt;
+
     @NotNull
     @Size(min=5, message="Name must be at least 5 characters long")
     private String name;
 
     @Size(min = 1, message = "You must choose at least 1 ingrendient")
-    private List<String> ingredients;// 成分
+    private List<Ingredient> ingredients;// 成分
 }
