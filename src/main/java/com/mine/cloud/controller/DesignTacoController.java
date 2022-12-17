@@ -1,13 +1,15 @@
 package com.mine.cloud.controller;
 
 import com.mine.cloud.domain.Ingredient;
+import com.mine.cloud.domain.Taco;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.validation.Errors;
+import org.springframework.web.bind.annotation.*;
 import com.mine.cloud.domain.Ingredient.Type;
 
+import javax.validation.Valid;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
@@ -20,9 +22,10 @@ import java.util.stream.Collectors;
  */
 @Slf4j
 @Controller
-@RequestMapping("/design")
+@RequestMapping("/design") // 指定基本的、通用的路径
 public class DesignTacoController {
-    @GetMapping
+
+    @ModelAttribute
     public void addIngredientsToModel(Model model) {
         List<Ingredient> ingredients = Arrays.asList(
                 new Ingredient("FLTO", "Flour Tortilla", Type.WRAP),
@@ -46,13 +49,28 @@ public class DesignTacoController {
         }
     }
 
+//    @RequestMapping(method = RequestMethod.GET) // 另一种通用的写法
     @GetMapping
     public String showDesignForm(Model model) {
-        model.addAttribute("taco", );
+        model.addAttribute("design", new Taco());
+        // 跳到design.html页面
         return "design";
     }
 
-    // 这个代码是干什么的？
+    @PostMapping
+    public String processzDesign(@Valid @ModelAttribute("design") Taco design, Errors errors,Model model) {
+        if(errors.hasErrors()) {
+            return "design";
+        }
+
+        // TODO 保存taco design
+        log.info("Processing design: " + design);
+
+        // 重定向到：/order/current
+        return "redirect:/orders/current";
+    }
+
+    // filter by type（用过类型过滤）
     private Iterable<Ingredient> filterByType(
             List<Ingredient> ingredients, Type type) {
         return ingredients

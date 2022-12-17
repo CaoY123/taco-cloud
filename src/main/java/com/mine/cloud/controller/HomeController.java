@@ -6,9 +6,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 /**
  * @author CaoY
  * @date 2022-12-14 23:45
- * @description
+ * @description 视图控制器
  */
-@Controller
+//@Controller // 已经通过WebConfig添加
 public class HomeController {
 
     @GetMapping("/")
