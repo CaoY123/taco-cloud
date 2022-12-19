@@ -8,7 +8,7 @@
   </head>
 
   <body>
-
+  <!--加上spring-boot-starter-security后默认开启防止跨域攻击而导致的无法post提交表单（提交后报错403）-->
     <form method="POST" th:action="@{/orders}" th:object="${order}">
       <h1>Order your taco creations!</h1>
 

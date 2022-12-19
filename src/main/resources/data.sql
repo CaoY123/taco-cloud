@@ -2,6 +2,7 @@ delete from Taco_Order_Tacos;
 delete from Taco_Ingredients;
 delete from Taco;
 delete from Taco_Order;
+delete from User;
 
 delete from Ingredient;
 insert into Ingredient (id, name, type) 
@@ -24,3 +25,9 @@ insert into Ingredient (id, name, type)
                 values ('SLSA', 'Salsa', 'SAUCE');
 insert into Ingredient (id, name, type) 
                 values ('SRCR', 'Sour Cream', 'SAUCE');
+
+insert into User (id, name, password, enabled, authority)
+values (1, 'xm', '{noop}xm', true, 'NORMAL'),
+       (2, 'jerry', '{noop}jerry', true, 'NORMAL'),
+       (3, 'jack', '{noop}jack', true, 'ADMIN'),
+       (4, 'blue', '{noop}blue', false, 'MAX');
