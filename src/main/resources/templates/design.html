@@ -13,6 +13,7 @@
     <img th:src="@{/images/TacoCloud.png}"/>
 
 <!-- tag::formTag[] -->
+    <!--加上spring-boot-starter-security后默认开启防止跨域攻击而导致的无法post提交表单（提交后报错403）-->
     <form method="POST" th:object="${design}">
     <!-- end::all[] -->
 
