@@ -25,9 +25,3 @@ insert into Ingredient (id, name, type)
                 values ('SLSA', 'Salsa', 'SAUCE');
 insert into Ingredient (id, name, type) 
                 values ('SRCR', 'Sour Cream', 'SAUCE');
-
-insert into User (id, name, password, enabled, authority)
-values (1, 'xm', '{noop}xm', true, 'NORMAL'),
-       (2, 'jerry', '{noop}jerry', true, 'NORMAL'),
-       (3, 'jack', '{noop}jack', true, 'ADMIN'),
-       (4, 'blue', '{noop}blue', false, 'MAX');
