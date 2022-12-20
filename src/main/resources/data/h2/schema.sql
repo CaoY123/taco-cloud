@@ -48,11 +48,14 @@ create table if not exists Taco_Order_Tacos2 (
     taco bigint not null
 );
 
-
 create table if not exists User (
     id identity,
-    NAME VARCHAR(50) NOT NULL,
-    PASSWORD VARCHAR(50) NOT NULL,
-    enabled BOOL NOT NULL,
-    authority VARCHAR(50) NOT NULL
+    username VARCHAR(50) NOT NULL,
+    password VARCHAR(50) NOT NULL,
+    fullname varchar(100) not null,
+    street varchar(80),
+    city varchar(30),
+    state varchar(30),
+    zip varchar(50),
+    phone varchar(20) not null
 );
