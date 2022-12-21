@@ -13,7 +13,8 @@ import java.util.List;
 /**
  * @author CaoY
  * @date 2022-12-16 1:46
- * @description 墨西哥卷饼表单类
+ * @description 墨西哥卷饼表单类 - 用于接收以字符串格式传过来的配料的名字，
+ *              后面会将这个配料表的名字映射导已存在的配料（String -> Ingredient）
  */
 @Data
 @NoArgsConstructor

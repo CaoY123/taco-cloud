@@ -21,6 +21,7 @@ public class RegistrationForm {
     private final String phone;
 
     public User toUser(PasswordEncoder passwordEncoder) {
+        // 这里对注册表单提交的密码信息进行一个加密存储
         return new User(
                 username, passwordEncoder.encode(password),
                 fullname, street, city, state, zip, fullname
