@@ -26,7 +26,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable()
+        http/*.csrf().disable()*/ // csrf防止跨域攻击（默认开启，但是提交表单的时候需要配置一个特定的隐藏域以生成独有的token）
                 .authorizeRequests()
                 .antMatchers("/design", "/orders")
                 .hasRole("USER") // 具备ROLE_USER权限的用户才能 /design 和 /orders
@@ -35,7 +35,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .formLogin()
                 .loginPage("/login")// 确定我们自定义的登录页在哪里
-                .defaultSuccessUrl("/design", true);// 指定登录成功后默认跳转到的登录页，第二个参数则是让用户不管登录前访问哪个页面，都统一跳转到指定的登录成功页面
+                .defaultSuccessUrl("/design", true)// 指定登录成功后默认跳转到的登录页，第二个参数则是让用户不管登录前访问哪个页面，都统一跳转到指定的登录成功页面
+                .and()
+                .logout() //拦截/logout页面
+                .logoutSuccessUrl("/");// 设置退出成功后的页面
 
 //                .anyRequest().authenticated()
 //                .and()

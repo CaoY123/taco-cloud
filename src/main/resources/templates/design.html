@@ -15,8 +15,8 @@
 <!-- tag::formTag[] -->
     <!--加上spring-boot-starter-security后默认开启防止跨域攻击而导致的无法post提交表单（提交后报错403）-->
     <form method="POST" th:object="${design}">
-    <!-- end::all[] -->
-
+        <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
+        <!-- end::all[] -->
     <span class="validationError"
           th:if="${#fields.hasErrors('ingredients')}"
           th:errors="*{ingredients}">Ingredient Error</span>
@@ -85,6 +85,13 @@
       </div>
 <!-- tag::closeFormTag[] -->
     </form>
+
+    <!--退出表单和按钮-->
+    <form method="post" th:action="@{/logout}">
+        <input type="submit" value="Logout">
+        <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
+    </form>
+
 <!-- end::closeFormTag[] -->
   </body>
 </html>

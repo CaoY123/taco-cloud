@@ -3,6 +3,7 @@ package com.mine.cloud.domain;
 import lombok.Data;
 import org.hibernate.validator.constraints.CreditCardNumber;
 
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
@@ -52,6 +53,9 @@ public class Order {
 
     @Digits(integer = 3, fraction = 0, message = "Invalid CVV")
     private String ccCVV;
+
+    @ManyToOne
+    private User user;// 用户 与 订单是一对多的关系
 
     List<Taco> tacos = new ArrayList<>();
 
