@@ -1,5 +1,6 @@
 package com.mine.cloud.controller;
 
+import cn.hutool.json.JSONUtil;
 import com.mine.cloud.dao.IngredientRepository;
 import com.mine.cloud.dao.TacoRepository;
 import com.mine.cloud.domain.Ingredient;
@@ -13,7 +14,9 @@ import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import com.mine.cloud.domain.Ingredient.Type;
+import org.springframework.web.bind.support.SessionStatus;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -36,6 +39,9 @@ public class DesignTacoController {
 
     // Taco表持久化(以及伴随Taco持久化的Taco_ingredients表持久化)
     private TacoRepository tacoRepository;
+
+    @Autowired
+    private HttpSession session;
 
     @Autowired
     public DesignTacoController(IngredientRepository ingredientRepository,
@@ -84,7 +90,8 @@ public class DesignTacoController {
             @Valid TacoForm designForm,
             Errors errors,
             @ModelAttribute Order order,
-            Model model) {
+            Model model,
+            SessionStatus sessionStatus) {
         if(errors.hasErrors()) {
             return "design";
         }
@@ -101,6 +108,8 @@ public class DesignTacoController {
             }
         }
 
+        Object order1 = session.getAttribute("order");
+
         Taco design = new Taco(
                 designForm.getId(),
                 null,
@@ -110,6 +119,11 @@ public class DesignTacoController {
 
         Taco saved = tacoRepository.save(design);
         order.addDesign(saved);
+
+//        sessionStatus.setComplete();
+        session.setAttribute("order", order);
+        model.addAttribute("order", order);
+
         log.info("Processing design: " + design);
 
         // 重定向到：/order/current

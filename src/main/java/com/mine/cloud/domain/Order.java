@@ -1,6 +1,10 @@
 package com.mine.cloud.domain;
 
+import cn.hutool.json.JSONUtil;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.hibernate.validator.constraints.CreditCardNumber;
 
 import javax.persistence.ManyToOne;
@@ -23,6 +27,8 @@ import java.util.List;
  * 3. 为了使得错误的数据能及时响应给用户，要对前端的页面做修改，以捕捉信息显示给用户
  */
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Order {
 
     private Long id;
@@ -57,9 +63,12 @@ public class Order {
     @ManyToOne
     private User user;// 用户 与 订单是一对多的关系
 
+    private String jsonTacos;
+
     List<Taco> tacos = new ArrayList<>();
 
     public void addDesign(Taco design) {
         this.tacos.add(design);
+        jsonTacos = JSONUtil.toJsonStr(this.tacos);
     }
 }

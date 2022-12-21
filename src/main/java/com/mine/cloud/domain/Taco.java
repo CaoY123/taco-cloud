@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -29,5 +30,5 @@ public class Taco {
     private String name;
 
     @Size(min = 1, message = "You must choose at least 1 ingrendient")
-    private List<Ingredient> ingredients;// 成分
+    private List<Ingredient> ingredients = new ArrayList<>();// 成分
 }
