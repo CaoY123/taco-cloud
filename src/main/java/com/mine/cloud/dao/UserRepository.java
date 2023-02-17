@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 /**
  * @author CaoY
  * @date 2022-12-20 19:01
- * @description
+ * @description 用户表数据接口
  */
 @Repository
 public interface UserRepository extends CrudRepository<User, Long> {

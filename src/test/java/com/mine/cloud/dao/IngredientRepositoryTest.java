@@ -22,4 +22,10 @@ public class IngredientRepositoryTest {
         repository.findAll().forEach(x -> System.out.println(x));
     }
 
+    @Test
+    public void testSave() {
+
+        repository.save(new Ingredient("0001", "辣椒", Ingredient.Type.WRAP));
+    }
+
 }

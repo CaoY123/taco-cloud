@@ -18,7 +18,7 @@ import javax.sql.DataSource;
 /**
  * @author CaoY
  * @date 2022-12-19 22:06
- * @description
+ * @description 安全配置
  */
 @Configuration
 @EnableWebSecurity

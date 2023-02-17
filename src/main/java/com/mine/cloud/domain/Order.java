@@ -7,10 +7,11 @@ import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.validator.constraints.CreditCardNumber;
 
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -27,10 +28,13 @@ import java.util.List;
  * 3. 为了使得错误的数据能及时响应给用户，要对前端的页面做修改，以捕捉信息显示给用户
  */
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
-public class Order {
+@Entity
+@Table(name = "Taco_Order")
+public class Order implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private Date placedAt;
@@ -65,6 +69,7 @@ public class Order {
 
     private String jsonTacos;
 
+    @ManyToMany(targetEntity = Taco.class)
     List<Taco> tacos = new ArrayList<>();
 
     public void addDesign(Taco design) {

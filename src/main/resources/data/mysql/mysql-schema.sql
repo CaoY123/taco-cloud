@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS Ingredient (
 CREATE TABLE IF NOT EXISTS Taco (
   `id` BIGINT PRIMARY KEY AUTO_INCREMENT,
   `name` VARCHAR(50) NOT NULL,
-  `createdAt` TIMESTAMP NOT NULL
+  `created_at` TIMESTAMP NOT NULL
 );
 
 # Taco_Ingredients表：即为Taco与Ingredient的一对多关系的表
@@ -32,9 +32,9 @@ CREATE TABLE IF NOT EXISTS Taco_Order (
 	`city` VARCHAR(50) NOT NULL,
 	`state` VARCHAR(100) NOT NULL,
 	`zip` VARCHAR(100) NOT NULL,
-	`ccNumber` VARCHAR(16) NOT NULL,
-	`ccExpiration` VARCHAR(5) NOT NULL,
-	`ccCVV` VARCHAR(3) NOT NULL,
+	`cc_number` VARCHAR(16) NOT NULL,
+	`cc_expiration` VARCHAR(5) NOT NULL,
+	`cc_cvv` VARCHAR(3) NOT NULL,
 	`placedAt` TIMESTAMP NOT NULL
 );
 

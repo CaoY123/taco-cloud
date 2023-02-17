@@ -1,8 +1,9 @@
 package com.mine.cloud.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
+import org.hibernate.annotations.NaturalId;
+
+import javax.persistence.*;
 
 /**
  * @author CaoY
@@ -11,9 +12,13 @@ import lombok.RequiredArgsConstructor;
  */
 @Data
 @RequiredArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PRIVATE, force = true)
+@Entity
 public class Ingredient {
+    @Id
     private final String id;
     private final String name;
+    @Enumerated(EnumType.STRING)
     private final Type type;
 
     public static enum Type {

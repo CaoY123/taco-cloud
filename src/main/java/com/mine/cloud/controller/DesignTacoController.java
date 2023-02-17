@@ -18,10 +18,7 @@ import org.springframework.web.bind.support.SessionStatus;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -79,7 +76,7 @@ public class DesignTacoController {
         for (Ingredient ingredient : ingredients) {
             ingredientNames.add(ingredient.getName());
         }
-        taco.setIngredients(ingredients);
+//        taco.setIngredients(ingredients);
         model.addAttribute("design", taco);
         // 跳到design.html页面
         return "design";
@@ -108,14 +105,13 @@ public class DesignTacoController {
             }
         }
 
-        Object order1 = session.getAttribute("order");
-
-        Taco design = new Taco(
-                designForm.getId(),
-                null,
-                designForm.getName(),
-                tacoIngredients
-        );
+//        Taco design = new Taco(
+//                designForm.getId(),
+//                new Date(),
+//                designForm.getName()
+////                tacoIngredients
+//        );
+        Taco design = null;
 
         Taco saved = tacoRepository.save(design);
         order.addDesign(saved);

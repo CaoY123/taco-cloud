@@ -106,7 +106,7 @@ public class OrderController {
                     }
                     ingredients.add(new Ingredient(ingredientId, ingredientName, type));
                 }
-                tacoList.add(new Taco(id, createdAt, name, ingredients));
+                tacoList.add(/*new Taco(id, createdAt, name, ingredients)*/null);
             }
 //            tacoList.forEach(System.out::println);
             order.setTacos(tacoList);
